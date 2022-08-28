@@ -26,6 +26,8 @@ pip install requirements.txt
 py ./scraper.py
 ```
 
+3. Import the csv file into Google Calendar or whatever other app you're using (have not tested on anything else)
+
 ## Proof
 
 In case you don't believe this shit works here's the schedule I imported for myself. The only reason I made this shit was so I could get a reminder when I might actually have to do something
