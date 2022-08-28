@@ -132,7 +132,7 @@ class CalendarScraper:
     return self._post('findCourseByProgramId').json()
 
   def _get_groups(self):
-    return self._post('findGroupByCourseId').json()
+    return list(filter(lambda g: int(g['group']) > 0, self._post('findGroupByCourseId').json()))
 
   def _get_event_list(self):
     return list(map(lambda e: CalendarEvent(e), self._post('getSemesterProgEventList').json()))
