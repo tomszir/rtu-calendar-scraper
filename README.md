@@ -13,6 +13,12 @@ Bottom text
 2. Run all of this shit in a command prompt
 
 ```sh
+# Clone the repository with git (or just download it as a zip file and extract)
+git clone https://github.com/tomszir/rtu-calendar-scraper
+
+# Navigate to the project directory
+cd rtu-calendar-scraper
+
 # Install python requirements
 pip install requirements.txt
 
