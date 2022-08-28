@@ -80,6 +80,11 @@ class CalendarScraper:
                    lambda o: f'{o["group"]}. grupa')
     self.group_id = group['group']
     self.semester_program_id = group['semesterProgramId']
+
+    if not self._is_published():
+      print("Programma vēl nav publicēta")
+      return
+
     self._save_to_csv()
 
   def _save_to_csv(self):
@@ -133,6 +138,9 @@ class CalendarScraper:
 
   def _get_groups(self):
     return list(filter(lambda g: int(g['group']) > 0, self._post('findGroupByCourseId').json()))
+
+  def _is_published(self):
+    return self._post('isSemesterProgramPublished').json()
 
   def _get_event_list(self):
     return list(map(lambda e: CalendarEvent(e), self._post('getSemesterProgEventList').json()))
