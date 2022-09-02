@@ -17,7 +17,7 @@ def option(data: list, msg: str, label: Callable[..., str]):
 
     index = int(input(msg))
 
-    if index < 0 or index >= len(data):
+    if index <= 0 or index > len(data):
       continue
 
     return data[index - 1]
