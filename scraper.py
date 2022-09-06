@@ -1,4 +1,3 @@
-from ast import Lambda
 import os
 import csv
 import requests
