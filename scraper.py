@@ -21,50 +21,40 @@ def option(data: list, msg: str, label: Callable[..., str]):
 
     return data[index - 1]
 
-# Class for .csv file event
 class CalendarEvent:
   def __init__(self, data: dict):
     self.subject = data['eventTempName']
     self.start_date = self.get_date_string(data['eventDate'])
     self.start_time = self.get_time_string(data['customStart'])
+    self.end_date = self.get_ics_date_string(data['eventDate'])
     self.end_time = self.get_time_string(data['customEnd'])
     self.location = data['roomInfoText']
 
   def get_date_string(self, milliseconds: int):
     return datetime.fromtimestamp(milliseconds // 1000).strftime('%d/%m/%Y')
 
-  def get_time_string(self, time: dict):
-    hour = str(time['hour']).zfill(2)
-    minute = str(time['minute']).zfill(2)
-    return datetime.strptime(f"{hour}:{minute}", "%H:%M").strftime("%I:%M %p")
-
-  def get_csv_data(self):
-    return [self.subject, self.start_date, self.start_time, self.start_date, self.end_time, self.location]
-
-  @classmethod
-  def get_csv_header_data(cls):
-    return ['SUBJECT', 'START DATE', 'START TIME', 'END DATE', 'END TIME', 'LOCATION']
-
-# Class for .ics file event
-class iCalendarEvent:
-  def __init__(self, data: dict):
-    self.subject = data['eventTempName']
-    self.start_date = self.get_date_string(data['eventDate'])
-    self.start_time = self.get_time_string(data['customStart'])
-    self.end_date = self.get_date_string(data['eventDate'])
-    self.end_time = self.get_time_string(data['customEnd'])
-    self.location = data['roomInfoText']
-
-  def get_date_string(self, milliseconds: int):
+  def get_ics_date_string(self, milliseconds: int):
     return datetime.fromtimestamp(milliseconds // 1000).strftime('%Y%m%d')
 
   def get_time_string(self, time: dict):
     hour = str(time['hour']).zfill(2)
     minute = str(time['minute']).zfill(2)
+    return datetime.strptime(f"{hour}:{minute}", "%H:%M").strftime("%I:%M %p")
+
+  def get_ics_time_string(self, time: dict):
+    hour = str(time['hour']).zfill(2)
+    minute = str(time['minute']).zfill(2)
     return datetime.strptime(f"{hour}:{minute}", "%H:%M").strftime("T%H%M00Z")
+
+  def get_csv_data(self):
+    return [self.subject, self.start_date, self.start_time, self.end_date, self.end_time, self.location]
 
   def get_ics_data(self):
     return [f'BEGIN:VEVENT\nDTSTART:{self.start_date}{self.start_time}\nDTEND:{self.end_date}{self.end_time}\nDESCRIPTION:\nLOCATION:{self.location}\nSEQUENCE:0\nSTATUS:CONFIRMED\nSUMMARY:{self.subject}\nEND:VEVENT']
+
+  @classmethod
+  def get_csv_header_data(cls):
+    return ['SUBJECT', 'START DATE', 'START TIME', 'END DATE', 'END TIME', 'LOCATION']
 
   @classmethod
   def get_ics_header_data(cls):
@@ -115,9 +105,9 @@ class CalendarScraper:
     fileFormats = [{"id": 0, "label": ".csv"}, {"id": 1, "label": ".ics"}, {"id": 2, "label": ".csv un .ics"}]
     fileFormat = option(fileFormats, 'Izvēlies formatu: ', lambda o: o['label'])
 
-    if(fileFormat == ".csv"):
+    if(fileFormat['label'] == ".csv"):
       self._save_to_csv()
-    elif(fileFormat == ".ics"):
+    elif(fileFormat['label'] == ".ics"):
       self._save_to_ics()
     else:
       self._save_to_csv()
@@ -144,16 +134,16 @@ class CalendarScraper:
 
     for month in range(9, 13):
       self.month = month
-      events.extend(self._get_event_list_ics())
+      events.extend(self._get_event_list())
 
     with open('./data.ics', mode='w', newline='', encoding='UTF-8') as file:
       writer = csv.writer(file, escapechar=' ', quoting=csv.QUOTE_NONE)
-      writer.writerow(iCalendarEvent.get_ics_header_data())
+      writer.writerow(CalendarEvent.get_ics_header_data())
 
       for event in events:
         writer.writerow(event.get_ics_data())
 
-      writer.writerow(iCalendarEvent.get_ics_footer_data())
+      writer.writerow(CalendarEvent.get_ics_footer_data())
 
     print("Kalendārs ir izveidots 'data.ics' failā!")
 
@@ -198,9 +188,6 @@ class CalendarScraper:
 
   def _get_event_list(self):
     return list(map(lambda e: CalendarEvent(e), self._post('getSemesterProgEventList').json()))
-
-  def _get_event_list_ics(self):
-    return list(map(lambda e: iCalendarEvent(e), self._post('getSemesterProgEventList').json()))
 
 if __name__ == '__main__':
   scraper = CalendarScraper()
