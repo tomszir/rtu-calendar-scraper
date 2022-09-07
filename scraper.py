@@ -112,8 +112,16 @@ class CalendarScraper:
       print("Programma vēl nav publicēta")
       return
 
-    self._save_to_csv()
-    self._save_to_ics()
+    fileFormats = [{"id": 0, "label": ".csv"}, {"id": 1, "label": ".ics"}, {"id": 2, "label": ".csv un .ics"}]
+    fileFormat = option(fileFormats, 'Izvēlies formatu: ', lambda o: o['label'])
+
+    if(fileFormat == ".csv"):
+      self._save_to_csv()
+    elif(fileFormat == ".ics"):
+      self._save_to_ics()
+    else:
+      self._save_to_csv()
+      self._save_to_ics()
 
   def _save_to_csv(self):
     events = []
