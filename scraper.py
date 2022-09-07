@@ -26,8 +26,12 @@ class CalendarEvent:
     self.subject = data['eventTempName']
     self.start_date = self.get_date_string(data['eventDate'])
     self.start_time = self.get_time_string(data['customStart'])
-    self.end_date = self.get_ics_date_string(data['eventDate'])
+    self.ics_start_date = self.get_ics_date_string(data['eventDate'])
+    self.ics_start_time = self.get_ics_time_string(data['customStart'])
+    self.end_date = self.get_date_string(data['eventDate'])
     self.end_time = self.get_time_string(data['customEnd'])
+    self.ics_end_date = self.get_ics_date_string(data['eventDate'])
+    self.ics_end_time = self.get_ics_time_string(data['customEnd'])
     self.location = data['roomInfoText']
 
   def get_date_string(self, milliseconds: int):
@@ -50,7 +54,7 @@ class CalendarEvent:
     return [self.subject, self.start_date, self.start_time, self.end_date, self.end_time, self.location]
 
   def get_ics_data(self):
-    return [f'BEGIN:VEVENT\nDTSTART:{self.start_date}{self.start_time}\nDTEND:{self.end_date}{self.end_time}\nDESCRIPTION:\nLOCATION:{self.location}\nSEQUENCE:0\nSTATUS:CONFIRMED\nSUMMARY:{self.subject}\nEND:VEVENT']
+    return [f'BEGIN:VEVENT\nDTSTART:{self.ics_start_date}{self.ics_start_time}\nDTEND:{self.ics_end_date}{self.ics_end_time}\nDESCRIPTION:\nLOCATION:{self.location}\nSEQUENCE:0\nSTATUS:CONFIRMED\nSUMMARY:{self.subject}\nEND:VEVENT']
 
   @classmethod
   def get_csv_header_data(cls):
