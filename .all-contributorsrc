@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "Wolferado",
+      "name": "Aleksey Karelin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/64694787?v=4",
+      "profile": "https://github.com/Wolferado",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "rtu-calendar-scraper",
+  "projectOwner": "tomszir",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
