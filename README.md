@@ -1,6 +1,6 @@
 # RTU Calendar Scraper
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Creates a .csv file from the timetable at https://nodarbibas.rtu.lv/, so you can add it to your google calendar or whatever. Currently scrapes from 2022 September to December, might update in the future to include changing dates.
@@ -46,6 +46,7 @@ In case you don't believe this shit works here's the schedule I imported for mys
   <tbody>
     <tr>
       <td align="center"><a href="https://github.com/Wolferado"><img src="https://avatars.githubusercontent.com/u/64694787?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Aleksey Karelin</b></sub></a><br /><a href="https://github.com/tomszir/rtu-calendar-scraper/commits?author=Wolferado" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/arturskovrigo"><img src="https://avatars.githubusercontent.com/u/52778163?v=4?s=100" width="100px;" alt=""/><br /><sub><b>arturskovrigo</b></sub></a><br /><a href="https://github.com/tomszir/rtu-calendar-scraper/issues?q=author%3Aarturskovrigo" title="Bug reports">🐛</a> <a href="https://github.com/tomszir/rtu-calendar-scraper/commits?author=arturskovrigo" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
