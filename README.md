@@ -9,11 +9,38 @@ Bottom text
 
 ## Usage
 
-1. Install Python from [here](https://www.python.org/downloads/)
+> Tested on: 
+> - Python version 3.10.2 and Windows 10
+> - MacOS X 12 Monterey and Python 3.10.7
+> - Ubuntu 22.04 and Python 3.10.7
 
-> Tested only on Python version 3.10.2 and Windows 10
+### 1. Install Python:
 
-2. Run all of this shit in a command prompt
+Any system with Python 3.10 or newer should be compatible!
+
+**Windows** 
+
+Download and install from [here.](https://www.python.org/downloads/)
+
+**Ubuntu**
+
+Run the following:
+
+- `apt update` - Update your repository's
+
+- `apt install python3` - Install Python
+    
+**MacOS**
+
+Install homebrew from [here.](https://brew.sh/)
+Then run the following commands:
+
+- `brew update` - Update homebrew repos
+- `brew install python` - Install Python3
+- `python -m ensurepip --upgrade` - Make sure pip exists/install it
+
+
+### 2. Run all of this shit in a command prompt
 
 ```sh
 # Clone the repository with git (or just download it as a zip file and extract)
@@ -29,7 +56,7 @@ pip install -r requirements.txt
 py ./main.py
 ```
 
-3. Import the csv file into Google Calendar or whatever other app you're using (have not tested on anything else)
+### 3. There should be a .csv file into Google Calendar for other apps, a .ics file is also available!
 
 ## Proof
 
