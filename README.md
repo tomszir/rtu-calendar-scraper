@@ -20,10 +20,10 @@ git clone https://github.com/tomszir/rtu-calendar-scraper
 cd rtu-calendar-scraper
 
 # Install python requirements
-pip install requirements.txt
+pip install -r requirements.txt
 
 # Run the scraper tool and follow prompts
-py ./scraper.py
+py ./main.py
 ```
 
 3. Import the csv file into Google Calendar or whatever other app you're using (have not tested on anything else)
@@ -33,6 +33,17 @@ py ./scraper.py
 In case you don't believe this shit works here's the schedule I imported for myself. The only reason I made this shit was so I could get a reminder when I might actually have to do something
 
 ![proof](./.assets/proof.png)
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## License
 
