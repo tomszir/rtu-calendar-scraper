@@ -52,7 +52,6 @@ class CalendarAPI:
     """
     required_data = ['semesterId']
     json = cls.post('findProgramsBySemesterId', data, required_data).json()
-    print(json[0])
     return list(map(DepartmentData.from_json, json))
 
   @classmethod

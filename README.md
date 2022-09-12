@@ -1,6 +1,9 @@
 # RTU Calendar Scraper
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Creates a .csv file from the timetable at https://nodarbibas.rtu.lv/, so you can add it to your google calendar or whatever. Currently scrapes from 2022 September to December, might update in the future to include changing dates.
@@ -9,7 +12,8 @@ Bottom text
 
 ## Usage
 
-> Tested on: 
+> Tested on:
+>
 > - Python version 3.10.2 and Windows 10
 > - MacOS X 12 Monterey and Python 3.10.7
 > - Ubuntu 22.04 and Python 3.10.7
@@ -18,7 +22,7 @@ Bottom text
 
 Any system with Python 3.10 or newer should be compatible!
 
-**Windows** 
+**Windows**
 
 Download and install from [here.](https://www.python.org/downloads/)
 
@@ -29,7 +33,7 @@ Run the following:
 - `apt update` - Update your repository's
 
 - `apt install python3` - Install Python
-    
+
 **MacOS**
 
 Install homebrew from [here.](https://brew.sh/)
@@ -38,7 +42,6 @@ Then run the following commands:
 - `brew update` - Update homebrew repos
 - `brew install python` - Install Python3
 - `python -m ensurepip --upgrade` - Make sure pip exists/install it
-
 
 ### 2. Run all of this shit in a command prompt
 
@@ -93,4 +96,4 @@ In case you don't believe this shit works here's the schedule I imported for mys
 
 ## License
 
-Do whatever you want with this
+This project is under the [MIT license](./LICENSE)
