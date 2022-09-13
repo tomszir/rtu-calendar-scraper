@@ -40,7 +40,7 @@ class CalendarWriter:
         date = event.date.strftime(date_format)
         start_time = event.start_datetime.strftime(time_format)
         end_time = event.end_datetime.strftime(time_format)
-        row = [event.subject, date, start_time, end_time, event.location]
+        row = [event.subject, date, start_time, date, end_time, event.location]
         writer.writerow(row)
 
   def write_ics(self):
