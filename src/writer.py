@@ -33,7 +33,7 @@ class CalendarWriter:
     time_format = "%I:%M %p"
 
     with open(f'{self.filename}.csv', mode='w', encoding="utf-8") as file:
-      writer = csv.writer(file)
+      writer = csv.writer(file, delimiter=';')
       writer.writerow(header)
 
       for event in self.data.events:
