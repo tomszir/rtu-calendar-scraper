@@ -48,13 +48,39 @@ class CalendarWriter:
     Writes the calendar events to an iCalendar format file.
     """
     header = '\n'.join(
-      ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//tomszir/rtu-calendar-scraper//LV', 'CALSCALE:GREGORIAN'])
+        ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//tomszir/rtu-calendar-scraper//LV', 'CALSCALE:GREGORIAN'])
+
+    # Timezone data for ical based off tzurl.org
+    timezone = '\n'.join(
+        ['BEGIN:VTIMEZONE', 'TZID:Europe/Riga', 'LAST-MODIFIED:20220816T024022Z',
+         'TZURL:http://tzurl.org/zoneinfo-outlook/Europe/Riga',
+         'X-LIC-LOCATION:Europe/Riga',
+         'BEGIN:DAYLIGHT',
+         'TZNAME:EEST',
+         'TZOFFSETFROM:+0200',
+         'TZOFFSETTO:+0300',
+         'DTSTART:19700329T030000',
+         'RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU',
+         'END:DAYLIGHT',
+         'BEGIN:STANDARD',
+         'TZNAME:EET',
+         'TZOFFSETFROM:+0300',
+         'TZOFFSETTO:+0200',
+         'DTSTART:19701025T040000',
+         'RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU',
+         'END:STANDARD',
+         'END:VTIMEZONE']
+    )
+
     footer = '\n'.join(['END:VCALENDAR'])
 
-    datetime_format = "%Y%m%dT%H%M00Z"
+    datetime_format = "%Y%m%dT%H%M00"
 
     with open(f'{self.filename}.ics', mode='w', encoding="utf-8") as file:
+
       file.write(header + '\n')
+      file.write(timezone + '\n')
+
       for event in self.data.events:
         time_stamp = datetime.datetime.now().strftime(datetime_format)
         start_time = event.start_datetime.strftime(datetime_format)
@@ -63,16 +89,17 @@ class CalendarWriter:
             f'BEGIN:VEVENT',
             f'UID:{uuid.uuid4()}',
             f'DTSTAMP:{time_stamp}',
-            f'DTSTART:{start_time}',
-            f'DTEND:{end_time}',
-            f'DESCRIPTION:',
+            f'DTSTART;TZID=Europe/Riga:{start_time}',
+            f'DTEND;TZID=Europe/Riga:{end_time}',
             f'LOCATION:{event.location}',
             f'SEQUENCE:0',
             f'STATUS:CONFIRMED',
             f'SUMMARY:{event.subject}',
             f'END:VEVENT'
         ]
+
         file.write('\n'.join(row) + '\n')
+
       file.write(footer)
 
   @property
