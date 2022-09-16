@@ -30,7 +30,9 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/17514092?v=4",
       "profile": "https://mednis.id.lv",
       "contributions": [
-        "doc"
+        "doc",
+        "bug",
+        "code"
       ]
     }
   ],
