@@ -4,9 +4,11 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-Creates a .csv file from the timetable at https://nodarbibas.rtu.lv/, so you can add it to your google calendar or whatever. Currently scrapes from 2022 September to December, might update in the future to include changing dates.
+Exports timetable data from [RTU Nodarbibas](https://nodarbibas.rtu.lv) to `.ical` and `.csv` formats for importing into calendar apps.
 
-Bottom text
+The `.csv` is only supported on Google Calendar, while `.ical` is supported by most calendar apps, including Outlook.
+
+Currently only exports events until January - semester selection may be added later.
 
 ## Usage
 
@@ -54,7 +56,7 @@ cd rtu-calendar-scraper
 pip install -r requirements.txt
 
 # Run the scraper tool and follow prompts
-py ./main.py
+python3 ./main.py
 ```
 
 ### 3. There should be a .csv file into Google Calendar for other apps, a .ics file is also available!

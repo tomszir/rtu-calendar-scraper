@@ -21,7 +21,9 @@ class CalendarWriter:
     """
     self.write_csv()
     self.write_ics()
-    print('Pabeigts! Dati ir izvadīti "output" mapē')
+
+    print('\nPabeigts! \n\nDati ir izvadīti sekojošā mapē:')
+    print(os.path.abspath(os.getcwd()) + '/output/')
 
   def write_csv(self):
     """

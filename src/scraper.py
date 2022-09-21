@@ -1,8 +1,6 @@
 
 import os
 from typing import Callable
-
-
 from src.api import CalendarAPI
 from src.data import CalendarData
 from src.writer import CalendarWriter
@@ -86,7 +84,7 @@ class CalendarScraper:
     if len(options) == 1:
       return options[0]
     while True:
-      os.system('cls')
+      os.system('cls||clear')
 
       for index, option in enumerate(options):
         print(f'#{str(index + 1)}: {option.label}')
