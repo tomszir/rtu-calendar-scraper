@@ -1,8 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
-from typing import Optional
+from dateutil.relativedelta import relativedelta
 
-from src.data import EventData, SemesterData, DepartmentData, CourseData, GroupData
+from src.data import CalendarData, EventData, SemesterOptionData, SemesterData, DepartmentData, CourseData, GroupData
 
 
 class CalendarAPI:
@@ -22,31 +22,40 @@ class CalendarAPI:
           f'Required API data-key "{key}" is not set!')
 
   @classmethod
-  def get(cls, path: str, data: Optional[dict[str, str | int]] = {}):
+  def get(cls, path: str, data: CalendarData):
     """
     Makes an HTTP GET request to a specified path with some data.
     """
-    return requests.get(f'{cls.BASE_URL}/{path}', data=data)
+    return requests.get(f'{cls.BASE_URL}/{path}', data=data.for_api)
 
   @classmethod
-  def post(cls, path: str, data: dict[str, str | int] = {}, required_data: list[str] = []):
+  def post(cls, path: str, data: CalendarData, required_data: list[str] = []):
     """
     Makes an HTTP POST request to a specified path with some data.
     """
-    cls.assert_data(data, required_data)
-    return requests.post(f'{cls.BASE_URL}/{path}', data=data)
+    cls.assert_data(data.for_api, required_data)
+    return requests.post(f'{cls.BASE_URL}/{path}', data=data.for_api)
 
   @classmethod
-  def semesters(cls):
+  def semesters(cls, data: CalendarData):
     """
     Scrapes the semesters from the calendar.
     """
-    soup = BeautifulSoup(cls.get('/').text, 'html.parser')
+    soup = BeautifulSoup(cls.get('/', data).text, 'html.parser')
     options = soup.select('#semester-id option')
-    return list(map(SemesterData.from_tag, options))
+    return list(map(SemesterOptionData.from_tag, options))
 
   @classmethod
-  def departments(cls, data: dict[str, str | int] = {}):
+  def semester(cls, data: CalendarData):
+    """
+    Get data about an RTU semester.
+    """
+    required_data = ['semesterId']
+    json = cls.post('getChousenSemesterStartEndDate', data, required_data).json()
+    return SemesterData.from_json(json)
+
+  @classmethod
+  def departments(cls, data: CalendarData):
     """
     Get all of the departments & programs in the current semester.
     """
@@ -55,7 +64,7 @@ class CalendarAPI:
     return list(map(DepartmentData.from_json, json))
 
   @classmethod
-  def courses(cls, data: dict[str, str | int] = {}):
+  def courses(cls, data: CalendarData):
     """
     Get all of the courses in the current program.
     """
@@ -64,7 +73,7 @@ class CalendarAPI:
     return list(map(CourseData.from_json, json))
 
   @classmethod
-  def groups(cls, data: dict[str, str | int] = {}):
+  def groups(cls, data: CalendarData):
     """
     Get all of the groups in the current program course.
     """
@@ -74,7 +83,7 @@ class CalendarAPI:
     return list(filter(lambda group: int(group.id) > 0, groups))
 
   @classmethod
-  def is_published(cls, data: dict[str, str | int] = {}):
+  def is_published(cls, data: CalendarData):
     """
     Check if a calendar is published for a course.
     """
@@ -83,16 +92,14 @@ class CalendarAPI:
     return not not json
 
   @classmethod
-  def events(cls, year: int, month: int, data: dict[str, str | int] = {}):
+  def events(cls, data: CalendarData):
     """
     Returns all of the calendar events for a course.
     """
-    data['year'] = year
-    data['month'] = month
     required_data = ['year', 'month', 'semesterProgramId']
     events: list[EventData] = []
 
-    while True:
+    while data.semester.start_date.month <= data.semester.end_date.month:
       try:
         json = cls.post('getSemesterProgEventList', data, required_data).json()
       except:
@@ -101,11 +108,7 @@ class CalendarAPI:
       if len(json) == 0:
         break
 
-      data['month'] = int(data['month']) + 1
-
-      if data['month'] > 12:
-        data['year'] = int(data['year']) + 1
-        data['month'] = 1
+      data.semester.start_date = data.semester.start_date + relativedelta(months = 1)
 
       events.extend(list(map(EventData.from_json, json)))
     return events

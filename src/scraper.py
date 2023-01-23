@@ -29,10 +29,10 @@ class CalendarScraper:
     for prompt in self.prompts:
       prompt()
 
-    if not CalendarAPI.is_published(self.data.for_api):
+    if not CalendarAPI.is_published(self.data):
       return print('Programma vēl nav publicēta.')
 
-    self.data.events = CalendarAPI.events(2022, 9, self.data.for_api)
+    self.data.events = CalendarAPI.events(self.data)
 
     writer = CalendarWriter(self.data)
     writer.write()
@@ -41,15 +41,18 @@ class CalendarScraper:
     """
     Prompts the user to select a semester.
     """
-    semesters = CalendarAPI.semesters()
+    semesters = CalendarAPI.semesters(self.data)
     message = "Lūdzu izvēlies semestri"
-    self.data.semester = self.get_from_option(semesters, message)
+    
+    self.data.semester_option = self.get_from_option(semesters, message)
+    self.data.semester = CalendarAPI.semester(self.data)
+
 
   def prompt_departments(self):
     """
     Prompts the user to select a department.
     """
-    departments = CalendarAPI.departments(self.data.for_api)
+    departments = CalendarAPI.departments(self.data)
     message = "Lūdzu izvēlies departamentu"
     self.data.department = self.get_from_option(departments, message)
 
@@ -65,7 +68,7 @@ class CalendarScraper:
     """
     Prompts the user to select a course.
     """
-    courses = CalendarAPI.courses(self.data.for_api)
+    courses = CalendarAPI.courses(self.data)
     message = "Lūdzu izvēlies kursu"
     self.data.course = self.get_from_option(courses, message)
 
@@ -73,7 +76,7 @@ class CalendarScraper:
     """
     Prompts the user to select a group.
     """
-    groups = CalendarAPI.groups(self.data.for_api)
+    groups = CalendarAPI.groups(self.data)
     message = "Lūdzu izvēlies grupu"
     self.data.group = self.get_from_option(groups, message)
 

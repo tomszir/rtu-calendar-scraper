@@ -5,9 +5,9 @@ from bs4 import Tag
 
 
 @dataclass
-class SemesterData:
+class SemesterOptionData:
   """
-  Represents the data of an RTU calendar semester.
+  Represents the data of an RTU calendar semester list option.
   """
   id: str
   label: str
@@ -17,10 +17,33 @@ class SemesterData:
     """
     Creates a SemesterData object from a BeautifulSoup tag.
     """
-    return SemesterData(
+    return SemesterOptionData(
       id=str(tag['value']),
       label=tag.text
     )
+
+@dataclass
+class SemesterData:
+  """
+  Represents the data of an RTU calendar semester.
+  """
+  id: str
+  label: str
+  start_date: datetime
+  end_date: datetime
+
+  @staticmethod
+  def from_json(json: Any):
+    """
+    Creates a SemesterData object from a json response.
+    """
+    return SemesterData(
+      id=json['semesterId'],
+      label=json['titleLV'],
+      start_date=datetime.fromtimestamp(json['startDate'] // 1000),
+      end_date=datetime.fromtimestamp(json['endDate'] // 1000)
+    )
+
 
 
 @dataclass
@@ -154,6 +177,7 @@ class CalendarData:
   """
   Stores all data related to working with the calendar API.
   """
+  semester_option: SemesterOptionData
   semester: SemesterData
   department: DepartmentData
   program: ProgramData
@@ -168,8 +192,11 @@ class CalendarData:
     """
     data: dict[str, str | int] = {}
 
+    if hasattr(self, 'semester_option') and self.semester_option is not None:
+      data['semesterId'] = self.semester_option.id
     if hasattr(self, 'semester') and self.semester is not None:
-      data['semesterId'] = self.semester.id
+      data['year'] = self.semester.start_date.year
+      data['month'] = self.semester.start_date.month
     if hasattr(self, 'program') and self.program is not None:
       data['programId'] = self.program.id
     if hasattr(self, 'course') and self.course is not None:
