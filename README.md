@@ -1,26 +1,26 @@
 # RTU Calendar Scraper
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Exports timetable data from [RTU Nodarbibas](https://nodarbibas.rtu.lv) to `.ical` and `.csv` formats for importing into calendar apps.
 
 The `.csv` is only supported on Google Calendar, while `.ical` is supported by most calendar apps, including Outlook.
 
-Currently only exports events until January - semester selection may be added later.
-
 ## Usage
 
 > Tested on:
 >
-> - Python version 3.10.2 and Windows 10
-> - MacOS X 12 Monterey and Python 3.10.7
-> - Ubuntu 22.04 and Python 3.10.7
+> -   Python version 3.10.2 and Windows 10
+> -   MacOS X 12 Monterey and Python 3.10.7
+> -   Ubuntu 22.04 and Python 3.10.7
 
 ### 1. Install Python:
 
-Any system with Python 3.10 or newer should be compatible!
+Any system with Python 3.10 or newer should be compatible.
 
 **Windows**
 
@@ -30,18 +30,18 @@ Download and install from [here.](https://www.python.org/downloads/)
 
 Run the following:
 
-- `apt update` - Update your repository's
+-   `apt update` - Update your repository's
 
-- `apt install python3` - Install Python
+-   `apt install python3` - Install Python
 
 **MacOS**
 
 Install homebrew from [here.](https://brew.sh/)
 Then run the following commands:
 
-- `brew update` - Update homebrew repos
-- `brew install python` - Install Python3
-- `python -m ensurepip --upgrade` - Make sure pip exists/install it
+-   `brew update` - Update homebrew repos
+-   `brew install python` - Install Python3
+-   `python -m ensurepip --upgrade` - Make sure pip exists/install it
 
 ### 2. Run all of this shit in a command prompt
 
@@ -59,7 +59,7 @@ pip install -r requirements.txt
 python3 ./main.py
 ```
 
-### 3. There should be a .csv file into Google Calendar for other apps, a .ics file is also available!
+### 3. There should be a generated `.csv` and a `.ical` file in the `/output` directory.
 
 ## Proof
 
